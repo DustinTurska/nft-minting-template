@@ -21,6 +21,7 @@ import { client } from "@/lib/thirdwebClient";
 import React from "react";
 import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
+import { ecosystemWallet, createWallet } from "thirdweb/wallets";
 
 type Props = {
 	contract: ThirdwebContract;
@@ -42,6 +43,9 @@ export function NftMint(props: Props) {
 	const [customAddress, setCustomAddress] = useState("");
 	const { theme, setTheme } = useTheme();
 	const account = useActiveAccount();
+
+	const wallet = [ecosystemWallet("ecosystem.solutions-team-test"),
+	createWallet("io.metamask")];
 
 	const decreaseQuantity = () => {
 		setQuantity((prev) => Math.max(1, prev - 1));
@@ -68,7 +72,7 @@ export function NftMint(props: Props) {
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
 			<div className="absolute top-4 right-4">
-				<ConnectButton client={client} />
+				<ConnectButton client={client} wallets={wallet}/>
 			</div>
 			<Card className="w-full max-w-md">
 				<CardContent className="pt-6">
